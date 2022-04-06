@@ -15,11 +15,10 @@ const Form = () => {
     const Usersign = (e) => {
         setUserDetail({ ...userDetail, [e.target.name]: e.target.value })
     }
-    let obj={}
     const handleSubmit=(e)=>{
         e.preventDefault();
     }
-    console.log(userDetail, "userDetail")
+    console.log(userDetail, "userDetail");
     return (
         <form className='form' onSubmit={handleSubmit}>
             <div className='wraps'>
@@ -75,6 +74,7 @@ const Form = () => {
                     name="hobby"
                     value="cooking"
                     onChange={(e) => Usersign(e)}
+                    checked={hobby}
                     />
                 <label>cooking</label>
                 <input
@@ -82,7 +82,7 @@ const Form = () => {
                     name="hobby"
                     value="playing"
                     onChange={(e) => Usersign(e)}
-                    
+                    checked={hobby}
                      />
                 <label>Playing</label>
             </div>
