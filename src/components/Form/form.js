@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 
 const Form = () => {
-    const [gender,setGender]= useState();
-    const [hobby,setHobby]= useState();
+    const [gender, setGender] = useState('');
+    const [checked, setChecked] = useState();
     const [userDetail, setUserDetail] = useState({
         name: '',
         email: '',
         country: '',
         gender: gender,
-        hobby: hobby,
+        hobby: checked,
         image: '',
 
     })
     const Usersign = (e) => {
         setUserDetail({ ...userDetail, [e.target.name]: e.target.value })
     }
-    const handleSubmit=(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
     }
     console.log(userDetail, "userDetail");
@@ -55,16 +55,20 @@ const Form = () => {
                     name="gender"
                     value="male"
                     onChange={(e) => Usersign(e)}
-                    checked={gender} 
+                    checked={checked}
+                    // onClick={()=>setGender("male")}
+                    // checked={gender === "male"}
                 />
                 <label>Male</label>
                 <input
                     type="radio"
                     name="gender"
-                    value="female" 
+                    value="female"
                     onChange={(e) => Usersign(e)}
-                    checked={gender} 
-                    />
+                    checked={checked}
+                    // onClick={()=>setGender("female")}
+                    // checked={gender === "female"}
+                />
                 <label>Female</label>
             </div>
             <div className='wraps'>
@@ -74,16 +78,16 @@ const Form = () => {
                     name="hobby"
                     value="cooking"
                     onChange={(e) => Usersign(e)}
-                    checked={hobby}
-                    />
+                    checked={checked}
+                />
                 <label>cooking</label>
                 <input
                     type="checkbox"
                     name="hobby"
                     value="playing"
                     onChange={(e) => Usersign(e)}
-                    checked={hobby}
-                     />
+                    checked={checked}
+                />
                 <label>Playing</label>
             </div>
             <div className='wraps'>
