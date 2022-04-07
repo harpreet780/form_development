@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Form = () => {
     const [pictureFile, setPictureFile] = useState(null);
-    // const [checked , setChecked] = useState([]);
+    const [isChecked , setisChecked] = useState([]);
     const [userDetail, setUserDetail] = useState({
         name: '',
         email: '',
@@ -21,18 +21,13 @@ const Form = () => {
     const onSubmit = (e) => {
         console.log(userDetail,"submit");
     }
+    const handleChecked=(e)=>{
+         const target = e.target.checked
+    }
     const onChangePicture = e => {
         const imageFile = e.target.files[0];
         const imageUrl = URL.createObjectURL(imageFile);
-        //  setPictureFile(imageUrl);
-        setUserDetail({
-            name: userDetail.name,
-            email: userDetail.email,
-            country: userDetail.country,
-            gender: userDetail.gender,
-            hobby: userDetail.hobby,
-            picture:imageUrl,
-        })
+        setPictureFile(imageUrl);
     };
     console.log(userDetail, "userDetail");
     return (
@@ -93,7 +88,7 @@ const Form = () => {
                     name="hobby"
                     value="cooking"
                 />
-                <label htmlFor="hobby_cooking">cooking</label>
+                <label htmlFor="hobby_cooking">Cooking</label>
                 <input
                     id="hobby_playing"
                     type="checkbox"
