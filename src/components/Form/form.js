@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 const Form = () => {
-    const [gender, setGender] = useState('');
-    const [checked, setChecked] = useState();
+    const [pictureFile, setPictureFile] = useState(null);
+    // const [checked , setChecked] = useState([]);
     const [userDetail, setUserDetail] = useState({
         name: '',
         email: '',
         country: '',
-        gender: gender,
-        hobby: checked,
-        image: '',
+        gender: '',
+        hobby: '',
+        picture: '',
 
     })
     const Usersign = (e) => {
@@ -18,6 +18,22 @@ const Form = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
     }
+    const onSubmit = (e) => {
+        console.log(userDetail,"submit");
+    }
+    const onChangePicture = e => {
+        const imageFile = e.target.files[0];
+        const imageUrl = URL.createObjectURL(imageFile);
+        //  setPictureFile(imageUrl);
+        setUserDetail({
+            name: userDetail.name,
+            email: userDetail.email,
+            country: userDetail.country,
+            gender: userDetail.gender,
+            hobby: userDetail.hobby,
+            picture:imageUrl,
+        })
+    };
     console.log(userDetail, "userDetail");
     return (
         <form className='form' onSubmit={handleSubmit}>
@@ -51,58 +67,58 @@ const Form = () => {
             <div className='wraps'>
                 <label>Gender</label>
                 <input
+                    id="male"
                     type="radio"
                     name="gender"
                     value="male"
-                    onChange={(e) => Usersign(e)}
-                    checked={checked}
-                    // onClick={()=>setGender("male")}
-                    // checked={gender === "male"}
+                    onClick={() => setUserDetail({...userDetail,gender:"male"})}
+                    checked={userDetail.gender === "male"}
                 />
-                <label>Male</label>
+                <label htmlFor="male">Male</label>
                 <input
+                    id="female"
                     type="radio"
                     name="gender"
                     value="female"
-                    onChange={(e) => Usersign(e)}
-                    checked={checked}
-                    // onClick={()=>setGender("female")}
-                    // checked={gender === "female"}
+                    onClick={() => setUserDetail({...userDetail,gender:"female"})}
+                    checked={userDetail.gender === "female"}
                 />
-                <label>Female</label>
+                <label htmlFor="female">Female</label>
             </div>
             <div className='wraps'>
                 <label>Hobby</label>
                 <input
+                    id="hobby_cooking"
                     type="checkbox"
                     name="hobby"
                     value="cooking"
-                    onChange={(e) => Usersign(e)}
-                    checked={checked}
                 />
-                <label>cooking</label>
+                <label htmlFor="hobby_cooking">cooking</label>
                 <input
+                    id="hobby_playing"
                     type="checkbox"
                     name="hobby"
                     value="playing"
-                    onChange={(e) => Usersign(e)}
-                    checked={checked}
                 />
-                <label>Playing</label>
+                <label htmlFor="hobby_playing">Playing</label>
             </div>
             <div className='wraps'>
                 <label>Image</label>
-                <input
-                    type='file'
-                    name="image"
-                    accept="image/*"
-                    onChange={(e) => Usersign(e)}
-                    value={userDetail.image}
-                />
+                <div className="selectFile">
+                    <input
+                        type='file'
+                        name="picture"
+                        accept="image/*"
+                        onChange={onChangePicture}
+                        value={userDetail.picture}
+                        className={pictureFile ? "uploadFile" : ""}
+                    />
+                    <img src={pictureFile} />
+                </div>
             </div>
             <div className='Btn'>
                 <button
-                    onClick={handleSubmit}
+                    onClick={onSubmit}
                     type='submit'
                     className='submitBtn'
                 >Submit</button>
