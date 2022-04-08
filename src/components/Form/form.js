@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Form = () => {
+    // let localStorageData;
+    // if (localStorageData.getItem("userDetail")) {
+    //     localStorageData = JSON.parse(localStorage.getItem('userDetail'))
+    // }
+    // else {
+    //     localStorageData = [];
+    // }
     const [pictureFile, setPictureFile] = useState(null);
     const [userDetail, setUserDetail] = useState({
         name: '',
@@ -17,13 +24,21 @@ const Form = () => {
         e.preventDefault();
     }
     const onSubmit = (e) => {
-        console.log(userDetail, "submit");
+        localStorage.setItem("userDetail", JSON.stringify(userDetail));
+        setUserDetail({
+            name: '',
+            email: '',
+            country: '',
+            gender: '',
+            hobby: [],
+            picture: '',
+        });
     }
     const onChangePicture = (e) => {
         const imageFile = e.target.files[0];
         const imageUrl = URL.createObjectURL(imageFile);
         setPictureFile(imageUrl)
-        setUserDetail({...userDetail, picture:imageUrl});
+        setUserDetail({ ...userDetail, picture: imageUrl });
     }
     const handleonChecked = (e, data) => {
         let checked = [...userDetail.hobby]
@@ -36,9 +51,11 @@ const Form = () => {
         else {
             checked.push(data)
         }
-        return setUserDetail({...userDetail, hobby: checked})
+        return setUserDetail({ ...userDetail, hobby: checked })
     };
-    console.log(userDetail, "userDetail");
+    useEffect(() => {
+        JSON.parse(localStorage.getItem('userDetail'));
+    }, [userDetail]);
     return (
         <form className='form' onSubmit={handleSubmit}>
             <div className='wraps'>
