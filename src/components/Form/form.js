@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 
 const Form = () => {
     const [pictureFile, setPictureFile] = useState(null);
-    const [isChecked , setisChecked] = useState([]);
     const [userDetail, setUserDetail] = useState({
         name: '',
         email: '',
         country: '',
         gender: '',
-        hobby: '',
+        hobby: [],
         picture: '',
-
     })
     const Usersign = (e) => {
         setUserDetail({ ...userDetail, [e.target.name]: e.target.value })
@@ -19,15 +17,26 @@ const Form = () => {
         e.preventDefault();
     }
     const onSubmit = (e) => {
-        console.log(userDetail,"submit");
+        console.log(userDetail, "submit");
     }
-    const handleChecked=(e)=>{
-         const target = e.target.checked
-    }
-    const onChangePicture = e => {
+    const onChangePicture = (e) => {
         const imageFile = e.target.files[0];
         const imageUrl = URL.createObjectURL(imageFile);
-        setPictureFile(imageUrl);
+        setPictureFile(imageUrl)
+        setUserDetail({...userDetail, picture:imageUrl});
+    }
+    const handleonChecked = (e, data) => {
+        let checked = [...userDetail.hobby]
+        if (checked.includes(data)) {
+            var index = checked.indexOf(data);
+            if (index > -1) {
+                checked.splice(index, 1);
+            }
+        }
+        else {
+            checked.push(data)
+        }
+        return setUserDetail({...userDetail, hobby: checked})
     };
     console.log(userDetail, "userDetail");
     return (
@@ -66,7 +75,7 @@ const Form = () => {
                     type="radio"
                     name="gender"
                     value="male"
-                    onClick={() => setUserDetail({...userDetail,gender:"male"})}
+                    onClick={() => setUserDetail({ ...userDetail, gender: "male" })}
                     checked={userDetail.gender === "male"}
                 />
                 <label htmlFor="male">Male</label>
@@ -75,7 +84,7 @@ const Form = () => {
                     type="radio"
                     name="gender"
                     value="female"
-                    onClick={() => setUserDetail({...userDetail,gender:"female"})}
+                    onClick={() => setUserDetail({ ...userDetail, gender: "female" })}
                     checked={userDetail.gender === "female"}
                 />
                 <label htmlFor="female">Female</label>
@@ -87,6 +96,8 @@ const Form = () => {
                     type="checkbox"
                     name="hobby"
                     value="cooking"
+                    checked={userDetail.hobby.includes('cooking')}
+                    onClick={(e) => handleonChecked(e, 'cooking')}
                 />
                 <label htmlFor="hobby_cooking">Cooking</label>
                 <input
@@ -94,6 +105,12 @@ const Form = () => {
                     type="checkbox"
                     name="hobby"
                     value="playing"
+                    checked={userDetail.hobby.includes('playing')}
+                    onClick={(e) => handleonChecked(e, 'playing')}
+                // onClick={(e) => {
+                //     setUserDetail({ ...userDetail, hobby: [...userDetail.hobby, 'playing'] })
+                //     handleonChecked("playing")
+                // }}
                 />
                 <label htmlFor="hobby_playing">Playing</label>
             </div>
@@ -105,7 +122,6 @@ const Form = () => {
                         name="picture"
                         accept="image/*"
                         onChange={onChangePicture}
-                        value={userDetail.picture}
                         className={pictureFile ? "uploadFile" : ""}
                     />
                     <img src={pictureFile} />
