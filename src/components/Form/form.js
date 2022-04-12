@@ -23,7 +23,7 @@ const Form = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
     }
-    const onSubmit = (e) => {
+    const onSubmit = () => {
         localStorage.setItem("userDetail", JSON.stringify(userDetail));
         setUserDetail({
             name: '',

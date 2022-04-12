@@ -12,10 +12,8 @@
   color: #454545;
 
 }
- .form select {
+ .form .react-select{
   width:62%;
-  background: #EEF3F5;
-  box-shadow: inset 0px 0.776664px 1.55333px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   font-style: normal;
   font-weight: 400;
@@ -23,7 +21,6 @@
   line-height: 17px;
   color: #666666;
   border:none;
-  padding:5px 10px;
   outline:none;
   }
 .form .input{
