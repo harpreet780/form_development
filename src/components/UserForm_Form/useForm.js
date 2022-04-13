@@ -34,9 +34,9 @@ const UserForm = () => {
         setPictureFile(imageUrl)
     }
     const registerData = (e) => {
-        console.log({ ...e, picture: pictureFile });
-        reset();
-        usersignupApi(e).then(res => {
+        const payload = { ...e, picture: pictureFile };
+        usersignupApi(payload).then(res => {
+            reset(e);
             setPictureFile('');
         })
     }
