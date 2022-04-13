@@ -3,13 +3,13 @@ import { useForm, Controller } from "react-hook-form";
 import Select from 'react-select';
 import * as Yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-
+import { usersignupApi } from '../../api/postApi';
 
 const validationSchema = Yup.object({
     name: Yup.string().required("Please enter name*"),
     email: Yup.string().email().required("Please enter email*"),
-    password: Yup.string().required('Please Enter your password*').matches( /^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Must Contain 8 Characters and one special case Character & no."),
+    password: Yup.string().required('Please Enter your password*').matches(/^(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Must Contain 8 Characters and one special case Character & no."),
     country: Yup.object({
         label: Yup.string(),
         value: Yup.string().required("Please select country")
@@ -18,12 +18,12 @@ const validationSchema = Yup.object({
 
 const UserForm = () => {
     const [pictureFile, setPictureFile] = useState(null);
-    const { handleSubmit, register, control, formState: { errors } } = useForm({
+    const { handleSubmit, register, control, reset, formState: { errors } } = useForm({
         defaultValues: {
             name: '',
             email: '',
-            password:'',
-            country: {value:'',label:'', message: '' },
+            password: '',
+            country: { value: '', label: '', message: '' },
             picture: '',
         },
         resolver: yupResolver(validationSchema)
@@ -35,16 +35,18 @@ const UserForm = () => {
     }
     const registerData = (e) => {
         console.log({ ...e, picture: pictureFile });
-        e.target.reset();
-
+        reset();
+        usersignupApi(e).then(res => {
+            setPictureFile('');
+        })
     }
     const options = [
         { value: 'America', label: 'America' },
         { value: 'Canada', label: 'Canada' },
         { value: 'India', label: 'India' }
     ]
-  console.log(errors,"error");
-  
+    console.log(errors, "error");
+
     return (
         <form className='form' onSubmit={handleSubmit(registerData)} >
             <div className='wraps'>
