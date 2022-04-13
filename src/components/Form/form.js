@@ -141,7 +141,7 @@ const Form = () => {
                         onChange={onChangePicture}
                         className={pictureFile ? "uploadFile" : ""}
                     />
-                    <img src={pictureFile} />
+                    <img src={pictureFile} className="ImgBox" />
                 </div>
             </div>
             <div className='Btn'>
