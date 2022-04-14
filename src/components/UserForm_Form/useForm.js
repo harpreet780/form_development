@@ -36,7 +36,7 @@ const UserForm = () => {
     const registerData = (e) => {
         const payload = { ...e, picture: pictureFile };
         reset();
-        setPictureFile(' ');
+        setPictureFile(null);
         usersignupApi(payload).then(res => {
             reset();
         })
