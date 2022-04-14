@@ -36,9 +36,9 @@ const UserForm = () => {
     const registerData = (e) => {
         const payload = { ...e, picture: pictureFile };
         reset();
+        setPictureFile(' ');
         usersignupApi(payload).then(res => {
             reset();
-            setPictureFile('');
         })
     }
     const options = [
@@ -46,7 +46,6 @@ const UserForm = () => {
         { value: 'Canada', label: 'Canada' },
         { value: 'India', label: 'India' }
     ]
-    console.log(errors, "error");
 
     return (
         <form className='form' onSubmit={handleSubmit(registerData)} >
@@ -128,7 +127,7 @@ const UserForm = () => {
                     className='submitBtn'
                 >Submit</button>
             </div>
-        </form >
+        </form>
     );
 };
 
